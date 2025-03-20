@@ -1,0 +1,14 @@
+# Exclude virtual environment folders
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Exclude Python bytecode cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Exclude .DS_Store (macOS specific)
+.DS_Store
