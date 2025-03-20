@@ -12,3 +12,6 @@ __pycache__/
 
 # Exclude .DS_Store (macOS specific)
 .DS_Store
+
+# Exclude .lgd-nfy0 file/directory
+**/.lgd-nfy0
