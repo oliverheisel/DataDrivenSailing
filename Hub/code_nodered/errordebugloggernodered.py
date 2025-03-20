@@ -1,0 +1,87 @@
+import logging
+from logging.handlers import RotatingFileHandler
+import os
+
+def rollover(handler, max_entries=1000, delete_count=250):
+    """
+    rollover: when the log file has reached max_entries,
+    delete the oldest delete_count entries (lines) from the file.
+    """
+    # flush and close the current stream
+    if handler.stream:
+        handler.stream.flush()
+        handler.stream.close()
+    try:
+        with open(handler.baseFilename, 'r') as f:
+            lines = f.readlines()
+    except Exception:
+        lines = []  
+    # remove the oldest delete_count lines
+    new_lines = lines[delete_count:]
+    with open(handler.baseFilename, 'w') as f:
+        f.writelines(new_lines)
+    # reopen the file and update the entry counter based on the new content
+    handler.stream = open(handler.baseFilename, handler.mode)
+    handler._entry_count = len(new_lines)
+
+def patch_handler(handler, max_entries=1000, delete_count=250):
+    """
+    Patch handler's emit method to count entries.
+    When the count reaches max_entries, perform the rollover.
+    """
+    handler._entry_count = 0  # initialize a counter on the handler
+    original_emit = handler.emit  # keep the original emit method
+
+    def new_emit(record):
+        original_emit(record)
+        handler._entry_count += 1
+        if handler._entry_count >= max_entries:
+            rollover(handler, max_entries, delete_count)
+    handler.emit = new_emit
+
+# Define a filter function to exclude records with a level of error or higher.
+def max_level_filter(record):
+    return record.levelno < logging.ERROR
+
+# Assign the function's filter attribute to itself so it behaves like a filter object.
+max_level_filter.filter = max_level_filter
+
+def log(debug_log_file='debug.log', error_log_file='error.log',
+        debug=True, max_entries=1000, delete_count=250):
+    """
+    Sets up two file handlers:
+      - One for debug (and below error) messages in debug_log_file.
+      - One for error (and above) messages in error_log_file.
+    
+    When either file reaches max_entries, the oldest delete_count lines are removed.
+    """
+    # Ensure the logfiles directory exists and update log file paths.
+    log_dir = 'logfiles'
+    os.makedirs(log_dir, exist_ok=True)
+    debug_log_file = os.path.join(log_dir, debug_log_file)
+    error_log_file = os.path.join(log_dir, error_log_file)
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG if debug else logging.INFO)
+    
+    # Debug handler (for messages below error)
+    debug_handler = RotatingFileHandler(debug_log_file, mode='a', maxBytes=0, backupCount=0)
+    patch_handler(debug_handler, max_entries, delete_count)
+    debug_handler.setLevel(logging.DEBUG)
+    # Add filter to allow only messages below error level.
+    debug_handler.addFilter(max_level_filter)
+    debug_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    debug_handler.setFormatter(debug_formatter)
+    logger.addHandler(debug_handler)
+    
+    # Error handler (for error and above messages)
+    error_handler = RotatingFileHandler(error_log_file, mode='a', maxBytes=0, backupCount=0)
+    patch_handler(error_handler, max_entries, delete_count)
+    error_handler.setLevel(logging.ERROR)
+    error_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    error_handler.setFormatter(error_formatter)
+    logger.addHandler(error_handler)
+
+# Automatically configure logging when this module is imported.
+log(debug_log_file='debug.log', error_log_file='error.log',
+    debug=True, max_entries=1000, delete_count=250)
