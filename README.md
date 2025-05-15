@@ -1,16 +1,18 @@
 # DataDrivenSailing
 
-This repository provides Python scripts and modules developed for the BoatTracker and the central Hub as part of the DataDrivenSailing project—an open-source initiative aimed at enhancing sailing performance through data-driven insights.
+This repository provides Python scripts and modules developed for the **BoatTracker** and the central **Hub** as part of the *DataDrivenSailing* project — an open-source initiative aimed at enhancing sailing performance through data-driven insights.
 
-The software facilitates efficient data acquisition, logging, and analysis, supporting sailors and coaches in making informed decisions to optimize performance.
+The software enables efficient data acquisition, logging, and analysis, supporting sailors and coaches in making informed decisions to optimize performance.
 
 For more information about the project, please visit the [project wiki](https://datadrivensailing.wiki).
 
+---
 
 ## Directory Structure
 
 ### Tracker Software
 
+```
 Tracker/Software/code/
 ├── main.py
 ├── datamanager.py
@@ -30,9 +32,11 @@ Tracker/Software/code/
     ├── gyroacc_LSM6DSO.py
     ├── led.py
     └── mag_mmc56x3.py
+```
 
 ### Hub Software
 
+```
 hub/Software/
 ├── code/
 │   ├── main.py
@@ -63,10 +67,12 @@ hub/Software/
 │       ├── pingcheck.py
 │       ├── rsync.py
 │       └── analysisprep.py
-├── NodeRed/  *(currently empty)*
-└── Grafana/  *(currently empty)*
+├── NodeRed/        # (currently empty)
+└── Grafana/        # (currently empty)
+```
 
+---
 
 ## License
-This project is licensed under [LICENSE.md].
 
+This project is licensed under the terms described in [LICENSE.md](LICENSE.md).
