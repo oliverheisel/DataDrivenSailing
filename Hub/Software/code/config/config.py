@@ -1,10 +1,10 @@
 ## Configuration file for the BoatTracker, BuoyTracker and Hub
 
 # Indentiefier - use the same as you used in the Os settings (e.g. boat1, buoy1, hub)
-identifier = "boat1"
+identifier = "hub"
 
 # device type
-device_type = "boat"  # options: "boat", "buoy", "hub"
+device_type = "hub"  # options: "boat", "buoy", "hub"
 
 # ---------------------------------------------------------------------------
 # Debug logging

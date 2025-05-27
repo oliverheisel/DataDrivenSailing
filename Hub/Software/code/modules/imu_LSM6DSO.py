@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # i2c address for lsm6dso from config (default address)
-LSM6DSO_ADDR = int(config.gyroacc_i2c, 16)
+LSM6DSO_ADDR = int(config.imu_i2c, 16)
 
 # lsm6dso register addresses
 WHO_AM_I   = 0x0F  # who_am_i register
@@ -45,13 +45,12 @@ def _twos_complement(value, bits):
 def _apply_orientation(ax, ay, az):
     """
     applies orientation correction to accelerometer data.
-    1) always do +90° anticlockwise correction: (x, y) -> (y, -x)
     2) then apply one of 3 possible orientations from config.device_orientation.
        adjust these transforms as needed for your physical mounting.
     """
-    # step 1: always do +90° anticlockwise correction (x, y) -> (y, -x)
-    new_ax = ay
-    new_ay = -ax
+    # step 1: 
+    new_ax = -ay
+    new_ay = ax
     new_az = az
 
     # step 2: apply orientation-specific transform

@@ -17,7 +17,7 @@ def rollover(handler, max_entries=1000, delete_count=250):
         with open(handler.baseFilename, 'r') as f:
             lines = f.readlines()
     except Exception:
-        lines = []  
+        lines = []
     # remove the oldest delete_count lines
     new_lines = lines[delete_count:]
     with open(handler.baseFilename, 'w') as f:
