@@ -1,5 +1,7 @@
 ![DataDrivenSailing Header](https://datadrivensailing.gitbook.io/~gitbook/image?url=https%3A%2F%2F3849893206-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252F3nOHnHqWSETquXdlfpsF%252Fuploads%252FZFD75du86iGtM0usBqbX%252FHeader_DDS.png%3Falt%3Dmedia%26token%3D09a19365-ee3f-4ada-b7da-e5800a13606d&width=1248&dpr=1&quality=100&sign=cf05bd58&sv=2)
 
+[![GitBook](https://img.shields.io/static/v1?message=Documented%20on%20GitBook&logo=gitbook&logoColor=ffffff&label=%20&labelColor=5c5c5c&color=3F89A1)]([https://datadrivensailing.gitbook.io/wiki])
+
 This repository provides Python scripts and modules developed for the **BoatTracker** and the central **Hub** as part of the *DataDrivenSailing* project — an open-source initiative aimed at enhancing sailing performance through data-driven insights.
 
 The software enables efficient data acquisition, logging, and analysis, supporting sailors and coaches in making informed decisions to optimize performance.
