@@ -54,7 +54,7 @@ Software/
 │   ├── Screenhots/[Screenshots of all flows]
 │   ├── NodeRed_FlowBackup_ALL.json
 └── Grafana/
-│   ├── BoatliveDashboard.json
+    └── BoatliveDashboard.json
 ```
 The repository follows a **single–code-base** strategy: the same Python 3 sources run on every device, while behaviour is selected at start-up by a Python configuration file (`code/config/config.py`). Only brief functional roles are sketched below; full in-line documentation is available in the respective scripts.
 
