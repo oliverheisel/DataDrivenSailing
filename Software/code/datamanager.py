@@ -5,18 +5,18 @@
 # • SQLite logging
 # • Delete-log handling
 #
-# 100 % Funktionsparität zum ursprünglichen Skript:
-#   – dieselben Flags (streamdata, logdata, deletelog, deletelogstatus)
-#   – identische Logmeldungen und Zeitabstände
-#   – identisches DB-Schema (plus zwei optionale Wind-Spalten)
+# 100 % functional parity with the original script:
+#   – the same flags (streamdata, logdata, deletelog, deletelogstatus)
+#   – identical log messages and time intervals
+#   – identical DB schema (plus two optional wind columns)
 #
-# Ergänzungen:
-#   • MQTT-Topics erhalten einen Prefix aus config.device_type
+# Additions:
+#   • MQTT topics receive a prefix from config.device_type
 #     (boat / buoy / hub) -> boatlive / buoycontrol / …
-#   • _flatten_all() verarbeitet jetzt auch „imu“
-#   • DB wird bei Löschvorgang vollständig entfernt und neu erstellt
-#   • Schreibfehler in DB werden über `log_db_error` gemeldet
-#   • Queue wird beim Löschen geleert
+#   • _flatten_all() now also processes “imu”
+#   • During a delete operation the DB is completely removed and recreated
+#   • Write errors in the DB are reported via `log_db_error`
+#   • The queue is cleared when deleting
 # ---------------------------------------------------------------------------
 from __future__ import annotations
 

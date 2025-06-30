@@ -36,9 +36,8 @@ def _ensure_serial() -> serial.Serial:
     return _SER
 
 
-# ---------------------------------------------------------------------------
+
 # MWV parser
-# ---------------------------------------------------------------------------
 def _parse_mwv(sentence: str) -> dict:
     """
     Parse one $--MWV line.
@@ -61,9 +60,8 @@ def _parse_mwv(sentence: str) -> dict:
         raise ValueError(f"parse error: {e}") from None
 
 
-# ---------------------------------------------------------------------------
+
 # Public API
-# ---------------------------------------------------------------------------
 _LAST_SAMPLE: dict | None = None
 _LAST_TS: float | None = None
 _MAX_AGE = 0.25  # s – reuse a sample if it's still fresh
@@ -84,7 +82,7 @@ def get_data(heading: float = 0.0) -> dict | None:
     else:
         ser = _ensure_serial()
 
-        sample = None  # ------------ DEFAULT so UnboundLocalError can't happen
+        sample = None  #  DEFAULT so UnboundLocalError can't happen
 
         # Drain buffer to obtain the most recent line
         while ser.in_waiting:
@@ -93,10 +91,8 @@ def get_data(heading: float = 0.0) -> dict | None:
                 break
 
             decoded = line.decode(errors="replace").strip()
-            # ----------- NEW: raw sentence debug -------------------------
             if logger.isEnabledFor(logging.DEBUG):
                 logger.debug("wind raw: %s", decoded)
-            # -------------------------------------------------------------
 
             try:
                 sample = _parse_mwv(decoded)
@@ -109,7 +105,7 @@ def get_data(heading: float = 0.0) -> dict | None:
         _LAST_SAMPLE = sample
         _LAST_TS = now
 
-    # ------------- true-wind ------------------------------------------------
+    # true-wind 
     try:
         hdg = float(heading)
         wa = float(sample.get("w_angle", 0))
